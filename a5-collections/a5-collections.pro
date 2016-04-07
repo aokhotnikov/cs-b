@@ -17,4 +17,5 @@ HEADERS += \
     mylist.h \
     myqueue.h \
     myqueue2.h \
-    myunordered_map.h
+    myunordered_map.h \
+    mybst.h

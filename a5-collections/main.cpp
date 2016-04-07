@@ -5,7 +5,9 @@
 #include "myqueue.h"
 #include "myvector.h"
 #include "mylist.h"
+#include "mybst.h"
 #include "myunordered_map.h"
+#include <ctime>
 
 using namespace std;
 
@@ -212,47 +214,88 @@ int main(){
 //    list = list2;
 //    list.show();
 //------------------------ MyUnordered_map---------------------------
-    MyUnordered_map<string,int> mymap;
-    mymap.at("a") = 0;  mymap.at("b") = 1;
-    mymap.at("c") = 2;  mymap["d"] = 3;
-    mymap["e"] = 4;     mymap["f"] = 5;
-    mymap["g"] = 6;     mymap["h"] = 7;
-    mymap["i"] = 8;     mymap["j"] = 9;
-    mymap["k"] = 10;    mymap["l"] = 11;
-    cout << "=============== MyUnordered_map ===============" << endl;
-    mymap.show();
+//    MyUnordered_map<string,int> mymap;
+//    mymap.at("a") = 0;  mymap.at("b") = 1;
+//    mymap.at("c") = 2;  mymap["d"] = 3;
+//    mymap["e"] = 4;     mymap["f"] = 5;
+//    mymap["g"] = 6;     mymap["h"] = 7;
+//    mymap["i"] = 8;     mymap["j"] = 9;
+//    mymap["k"] = 10;    mymap["l"] = 11;
+//    cout << "=============== MyUnordered_map ===============" << endl;
+//    mymap.show();
 
-    mymap["m"] = 12;    mymap["n"] = 13;
-    mymap["o"] = 14;    mymap["p"] = 15;
-    mymap["q"] = 16;    mymap["r"] = 17;
-    mymap["s"] = 18;    mymap["t"] = 19;
-    mymap["u"] = 20;    mymap["v"] = 21;
-    mymap["w"] = 22;    mymap["x"] = 23;
-    mymap.add("y", 24); mymap.at("z") = 25;
-    cout << "=========== after expandNumBuckets =============" << endl;
-    mymap.show();
+//    mymap["m"] = 12;    mymap["n"] = 13;
+//    mymap["o"] = 14;    mymap["p"] = 15;
+//    mymap["q"] = 16;    mymap["r"] = 17;
+//    mymap["s"] = 18;    mymap["t"] = 19;
+//    mymap["u"] = 20;    mymap["v"] = 21;
+//    mymap["w"] = 22;    mymap["x"] = 23;
+//    mymap.add("y", 24); mymap.at("z") = 25;
+//    cout << "=========== after expandNumBuckets =============" << endl;
+//    mymap.show();
 
-    if (mymap.containsKey("d"))
-        cout << "[d] contains in hashmap" << endl;
-    mymap.remove("d");
-    mymap.remove("d");//show - [d] is missing
-    cout << "=============== after remove [d] ===============" << endl;
-    mymap.show();
+//    if (mymap.containsKey("d"))
+//        cout << "[d] contains in hashmap" << endl;
+//    mymap.remove("d");
+//    mymap.remove("d");//show - [d] is missing
+//    cout << "=============== after remove [d] ===============" << endl;
+//    mymap.show();
 
-    mymap.clear();
-    mymap["("] = 25;
-    mymap[")"] = 26;
-    mymap["-"] = 27;
-    mymap["-"]++;
-    cout << "==================== iterator ==================" << endl;
-    for (auto it = mymap.begin(); it != mymap.end(); ++it){
-        cout << "[" << it->key << "]=" << it->value << endl;
+//    mymap.clear();
+//    mymap["("] = 25;
+//    mymap[")"] = 26;
+//    mymap["-"] = 27;
+//    mymap["-"]++;
+//    cout << "==================== iterator ==================" << endl;
+//    for (auto it = mymap.begin(); it != mymap.end(); ++it){
+//        cout << "[" << it->key << "]=" << it->value << endl;
+//    }
+//    auto it = mymap.begin();
+//    it->value = 555;
+//    cout << "========== re assignment iterator ==============" << endl;
+//    cout << "[" << it->key  << "]=" << it->value << endl;
+//    cout << "[" << (*it).key  << "]=" << (*it).value << endl;
+
+//---------------------------MyBST------------------------------
+    MyBST<int> tree;
+//    srand(time(0));
+//    for (int i = 0; i < 20; ++i) {
+//        tree.insert(rand() % 100);
+//    }
+//    tree.show();
+    tree.insert(50);
+    tree.insert(25);
+    tree.insert(75);
+    tree.insert(20);
+    tree.insert(30);
+    tree.insert(85);
+    tree.insert(70);
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(18);
+    tree.insert(81);
+    cout << "=================== MyBST ===================" << endl;
+    tree.show();
+    cout << "root - " << tree.getRootData() << endl;
+    cout << "min - " << tree.findMin() << endl;
+    cout << "max - " << tree.findMax() << endl;
+    tree.remove(20);
+    cout << tree.removeMin() << endl;
+    cout << tree.removeMax() << endl;
+    cout << "============= MyBST after remove ============" << endl;
+    tree.show();
+    cout << "================= tree sort =================" << endl;
+    srand(time(0));
+    int mas[10];
+    for (int i = 0; i < 10; ++i) {
+        mas[i] = rand() % 1000;
+        cout << mas[i] << " ";
     }
-    auto it = mymap.begin();
-    it->value = 555;
-    cout << "========== re assignment iterator ==============" << endl;
-    cout << "[" << it->key  << "]=" << it->value << endl;
-    cout << "[" << (*it).key  << "]=" << (*it).value << endl;
+    cout << endl;
+    tree.sort(*&mas, 10);
+    for (int i = 0; i < 10; ++i) {
+        cout << mas[i] << " ";
+    }
 
     return 0;
 }
