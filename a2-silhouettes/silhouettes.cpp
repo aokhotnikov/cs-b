@@ -39,7 +39,7 @@ int searchSilhouettes(MyVector<MyVector<int>> &graph){
     MyList<int> listNumPixels;
     for (int i = 0; i < graph.size(); i++) {
         for (int j = 0; j < graph[i].size(); j++){
-            if (graph[i][j] == 1){ //brightness < brightnessIntensity
+            if (graph[i][j] == 1){ //brightness < BRIGHTNESS_INTENSITY
 
                 Pixel px(i, j);
                 MyQueue<Pixel> pixels;
