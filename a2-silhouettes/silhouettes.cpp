@@ -23,7 +23,7 @@ MyVector<MyVector<int>> createGraphFromImage(char *fileName){
             QColor clr(img.pixel(row, col));
             //int brightness = round(clr.red() * 0.299 + clr.green() * 0.587 + clr.blue() * 0.114);
             int brightness = clr.lightness();
-            brightness < brightnessIntensity ? line.push_back(1) : line.push_back(0);
+            brightness < BRIGHTNESS_INTENSITY ? line.push_back(1) : line.push_back(0);
         }
         graph.push_back(line);
     }

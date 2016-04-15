@@ -6,7 +6,7 @@
 #include "myqueue.h"
 #include "mylist.h"
 
-const short brightnessIntensity = 50;
+const short BRIGHTNESS_INTENSITY = 50;
 
 class Pixel{
 public:
