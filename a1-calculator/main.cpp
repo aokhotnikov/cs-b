@@ -6,7 +6,11 @@
 
 using namespace std;
 
-void initArgument(string & task, string nameArg, string argConsol);
+
+void initArguments(string & task, int argc, char* argv[]);
+
+void replaceVariable(string & task, string var, string val, size_t pos = 0);
+
 void initPriority(MyUnordered_map<string, int> & priority);
 
 int main(int argc, char* argv[])
@@ -24,14 +28,7 @@ int main(int argc, char* argv[])
 
     transform(task.begin(), task.end(), task.begin(), ::tolower);
 
-    if (regex_search(task, regex("(?!t)a(?!n)")))
-        argc > 2 ? initArgument(task, "a", argv[2]) : initArgument(task, "a", "");
-
-    if (regex_search(task, regex("b")))
-        argc > 3 ? initArgument(task, "b", argv[3]) : initArgument(task, "b", "");
-
-    if (regex_search(task, regex("c(?!os)")))
-        argc > 4 ? initArgument(task, "c", argv[4]) : initArgument(task, "c", "");
+    initArguments(task, argc, argv); // a, b, c, ... z
 
     cout << "Your arithmetic expression:  " << task << endl;
     if (checkValidation(task)) {
@@ -52,23 +49,47 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-/* Method replaces the variables "a", "b", "c" in the arguments that entered from the console
+/* The method replaces the variables on the values that
+ * are entered from the console or from the command line
+ *
+ * @param task The arithmetic expression
+ * @param argc The number of command line arguments
+ * @param argv An array of arguments from the command line
+*/
+void initArguments(string & task, int argc, char* argv[]){
+    string var, val;
+    for (int i = 2; i < argc; ++i){
+        string argConsol = argv[i];   // b=77 or y=44.6 or ...
+        var = argConsol.substr(0, 1); // variable
+        val = argConsol.substr(2);    // value
+
+        replaceVariable(task, var, val);
+    }
+    for (size_t i = 0; i < task.size(); ++i){
+        if (isalpha(task[i]) && !isalpha(task[i + 1]) && !isalpha(task[i - 1])){
+            var = task[i];
+            cout << "Enter the argument \"" << var << "\": ";
+            getline(cin, val);
+
+            replaceVariable(task, var, val, i);
+        }
+    }
+}
+
+/* The method replaces the variable by the value
  *
  * @param task  The arithmetic expression
- * @param nameArg The name of the argument
- * @param argConsol An argument is entered from the console
+ * @param var The variable (any letter from a to z)
+ * @param val The value of the variable
+ * @param pos The position in the expression with which the variable should be replaced
 */
-void initArgument(string & task, string nameArg, string argConsol){
-    if (argConsol.size() == 0){
-        cout << "Enter the argument \"" << nameArg << "\": ";
-        getline(cin, argConsol);
+void replaceVariable(string & task, string var, string val, size_t pos){
+    while (pos != string::npos){
+        if (!isalpha(task[pos - 1]) && !isalpha(task[pos + 1])){
+            task.replace(pos, 1, "(" + val + ")");
+        }
+        pos = task.find(var, pos + 1);
     }
-    if (nameArg == "a")
-        task = regex_replace(task, regex("(?!t)a(?!n)"), "(" + argConsol + ")");
-    else if (nameArg == "b")
-        task = regex_replace(task, regex("b"),           "(" + argConsol + ")");
-    else
-        task = regex_replace(task, regex("c(?!os)"),     "(" + argConsol + ")");
 }
 
 /* The method assigns arithmetic operations priorities
