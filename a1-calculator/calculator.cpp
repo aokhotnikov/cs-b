@@ -94,7 +94,7 @@ void calculate(MyStack<string> & operators, MyStack<double> & operands){
     else if(op == "T")              //tan
         operands.push(tan(num2));
     else if(op == "L")              //log
-        operands.push(log(num2));
+        operands.push(log10(num2));
     else {
 
         double num1 = operands.top();
